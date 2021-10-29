@@ -17,13 +17,13 @@ const styles = StyleSheet.create({
   },
 
   numberMemoryPanel: {
-    fontSize: 18,
+    fontSize: 20,
     color: '#EDEDED',
     fontWeight: '300',
   },
 
   numberPanel: {
-    fontSize: 40,
+    fontSize: 45,
     color: '#fff',
     fontWeight: '700',
     overflow: 'hidden',
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
   keyboardView: {
     height: Dimensions.get('window').height * .77,
     padding: 20,
-    // alignItems: 'center',
     justifyContent: 'space-around'
   },
 
