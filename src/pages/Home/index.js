@@ -8,12 +8,13 @@ const Home = () => {
   const [currentNumber, setCurrentNumber] = useState('0');
   const [operator, setOperator] = useState('');
   const [memoryNumber, setMemoryNumber] = useState('');
-
-  console.log(`OPERATOR: ${operator}`);
-  console.log(`CURRENT NUMBER: ${currentNumber}`);
+  const [buttonEqualsPressed, setButtonEqualsPressed] = useState(false);
 
   function addNumberToCurrentNumber(text) {
-    if (currentNumber == '0') {
+    if (buttonEqualsPressed) {
+      setButtonEqualsPressed(false);
+      setCurrentNumber(text);
+    } else if (currentNumber == '0') {
       setCurrentNumber(text);
     } else {
       setCurrentNumber(currentNumber + text);
@@ -21,13 +22,15 @@ const Home = () => {
   }
 
   function setOperatorNumbers(text) {
-    if (operator == '') {
-      setOperator(text)
-      setCurrentNumber(currentNumber + ' ' + text + ' ');
-    } else {
-      let resultado = calculate();
-      setCurrentNumber(resultado.toString() + ' ' + text + ' ');
-      setOperator(text);
+    if (!buttonEqualsPressed) {
+      if (operator == '') {
+        setOperator(text)
+        setCurrentNumber(`${currentNumber} ${text} `);
+      } else {
+        let resultado = calculate(false);
+        setCurrentNumber(`${resultado.toString()} ${text} `);
+        setOperator(text);
+      }
     }
   }
 
@@ -42,7 +45,7 @@ const Home = () => {
     setOperator('');
   }
 
-  function calculate() {
+  function calculate(pressed) {
     if (operator != '') {
       const parts = currentNumber.trim().split(operator);
       
@@ -52,28 +55,74 @@ const Home = () => {
 
         switch (operator) {
           case '+':
-            setCurrentNumber(number1 + number2);
-            setOperator('');
-            setMemoryNumber(currentNumber);
-            return number1 + number2;
+            if (pressed) {
+              setCurrentNumber(number1 + number2);
+              setOperator('');
+              setMemoryNumber('');
+              setButtonEqualsPressed(true);
+              return number1 + number2;
+            } else {
+              setCurrentNumber(number1 + number2);
+              setOperator('');
+              setMemoryNumber(currentNumber);
+              return number1 + number2;
+            }
 
           case '-':
-            setCurrentNumber(number1 - number2);
-            setOperator('');
-            setMemoryNumber(currentNumber);
-            return number1 - number2;
+            if (pressed) {
+              setCurrentNumber(number1 - number2);
+              setOperator('');
+              setMemoryNumber('');
+              setButtonEqualsPressed(true);
+              return number1 - number2;
+            } else {
+              setCurrentNumber(number1 - number2);
+              setOperator('');
+              setMemoryNumber(currentNumber);
+              return number1 - number2;
+            }
 
           case '*':
-            setCurrentNumber((number1 * number2).toFixed(2));
-            setOperator('');
-            setMemoryNumber(currentNumber);
-            return (number1 * number2).toFixed(2);
+            if (pressed) {
+              setCurrentNumber(number1 * number2);
+              setOperator('');
+              setMemoryNumber('');
+              setButtonEqualsPressed(true);
+              return number1 * number2;
+            } else {
+              setCurrentNumber(number1 * number2);
+              setOperator('');
+              setMemoryNumber(currentNumber);
+              return number1 * number2;
+            }
 
           case '/':
-            setCurrentNumber((number1 / number2).toFixed(2));
-            setOperator('');
-            setMemoryNumber(currentNumber);
-            return (number1 / number2).toFixed(2);
+            if (pressed) {
+              setCurrentNumber(number1 / number2);
+              setOperator('');
+              setMemoryNumber('');
+              setButtonEqualsPressed(true);
+              return number1 / number2;
+            } else {
+              setCurrentNumber(number1 / number2);
+              setOperator('');
+              setMemoryNumber(currentNumber);
+              return number1 / number2;
+            }
+
+          case '%':
+            if (pressed) {
+              setCurrentNumber((number1 / 100) * number2);
+              setOperator('');
+              setMemoryNumber('');
+              setButtonEqualsPressed(true);
+              return (number1 / 100) * number2;
+            } else {
+              setCurrentNumber((number1 / 100) * number2);
+              setOperator('');
+              setMemoryNumber(currentNumber);
+              return (number1 / 100) * number2;
+            }
         }
       }
     }
@@ -100,6 +149,7 @@ const Home = () => {
           />
           <ButtonOperator 
             text='%'
+            onPressed={() => setOperatorNumbers('%')}
           />
           <ButtonOperator 
             color='rgb(240, 165, 0)' 
@@ -190,7 +240,7 @@ const Home = () => {
           <ButtonOperator 
             color='rgb(87, 204, 153)' 
             text='='
-            onPressed={() => calculate()}
+            onPressed={() => calculate(true)}
           />
         </View>
       </View>

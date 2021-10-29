@@ -11,21 +11,22 @@ const styles = StyleSheet.create({
 
   viewPanel: {
     height: Dimensions.get('window').height * .23,
-    // backgroundColor: 'gray',
     alignItems: 'flex-end',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-around',
     padding: 20,
   },
 
   numberMemoryPanel: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#EDEDED',
+    fontWeight: '300',
   },
 
   numberPanel: {
-    fontSize: 35,
+    fontSize: 40,
     color: '#fff',
-    fontWeight: '700'
+    fontWeight: '700',
+    overflow: 'hidden',
   },
 
   keyboardView: {
